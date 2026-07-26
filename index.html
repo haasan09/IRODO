@@ -395,13 +395,82 @@ Error generating stack: `+c.message+`
   <script>
     window.IRODO_CHATBOT_CONFIG = {
       brand: "IRODO",
-      botName: "IRODO Smart Assistant",
+      botName: "Ayaan — IRODO Digital Agent",
+      agentName: "Ayaan",
       whatsapp: "923215602867",
       apiBaseUrl: "",
+      useApi: false,
       logoUrl: "./assets/irodo-mark.png"
     };
   </script>
   <script src="./chatbot-widget.js" defer></script>
+
+
+  <style id="irodo-whatsapp-circle-fix">
+    .whatsapp-float {
+      width: 64px !important;
+      height: 64px !important;
+      min-width: 64px !important;
+      min-height: 64px !important;
+      padding: 0 !important;
+      gap: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border-radius: 50% !important;
+      aspect-ratio: 1 / 1 !important;
+      overflow: hidden !important;
+      background: #25D366 !important;
+      box-shadow: 0 14px 35px rgba(37, 211, 102, .35) !important;
+    }
+    .whatsapp-float span { display: none !important; }
+    .whatsapp-float > svg { display: none !important; }
+    .whatsapp-float .irodo-wa-business-logo {
+      width: 31px !important;
+      height: 31px !important;
+      display: block !important;
+      margin: 0 !important;
+      object-fit: contain !important;
+      pointer-events: none;
+    }
+    .whatsapp-float:hover {
+      background: #1fb957 !important;
+      transform: translateY(-4px) scale(1.04) !important;
+    }
+    @media (max-width: 639px) {
+      .whatsapp-float {
+        width: 58px !important;
+        height: 58px !important;
+        min-width: 58px !important;
+        min-height: 58px !important;
+        bottom: 82px !important;
+        right: 84px !important;
+      }
+      .whatsapp-float .irodo-wa-business-logo { width: 29px !important; height: 29px !important; }
+    }
+  </style>
+  <script>
+    (function () {
+      function applyWhatsAppBusinessLogo() {
+        var button = document.querySelector('.whatsapp-float');
+        if (!button || button.querySelector('.irodo-wa-business-logo')) return !!button;
+        var img = document.createElement('img');
+        img.src = './assets/whatsapp-business.svg';
+        img.alt = 'WhatsApp Business';
+        img.className = 'irodo-wa-business-logo';
+        button.appendChild(img);
+        button.setAttribute('aria-label', 'Contact IRODO on WhatsApp Business');
+        return true;
+      }
+      if (!applyWhatsAppBusinessLogo()) {
+        var observer = new MutationObserver(function () {
+          if (applyWhatsAppBusinessLogo()) observer.disconnect();
+        });
+        observer.observe(document.documentElement, { childList: true, subtree: true });
+        setTimeout(function () { observer.disconnect(); }, 10000);
+      }
+    })();
+  </script>
 
 </body>
 </html>
